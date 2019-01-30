@@ -12,22 +12,32 @@ var server = http.createServer(function(req, res) {
 // Chargement de socket.io
 var io = require('socket.io').listen(server);
 
+var idConnection=0;
+
 io.sockets.on('connection', function (socket, pseudo) {
-    // Quand un client se connecte, on lui envoie un message
-    socket.emit('message', 'Vous êtes bien connecté !');
-    // On signale aux autres clients qu'il y a un nouveau venu
-    socket.broadcast.emit('message', 'Un autre client vient de se connecter ! ');
+    // on verifie le nombre de connection
+    if (idConnection<2) {
+    	idConnection++;
+    	console.log('nombre de connectés = '+idConnection);
+    	// Quand un client se connecte, on lui envoie un message
+    	socket.emit('messageConnection', 'Vous êtes le connecté numéro = '+idConnection);
+    	// On signale aux autres clients qu'il y a un nouveau venu
+    	socket.broadcast.emit('messageBroadcast', 'Un autre client vient de se connecter ! ');
 
-    // Dès qu'on nous donne un pseudo, on le stocke en variable de session
-    socket.on('petit_nouveau', function(pseudo) {
-        socket.pseudo = pseudo;
-    });
+    	// Dès qu'on nous donne un pseudo, on le stocke en variable de session
+    	socket.on('petit_nouveau', function(pseudo) {
+        	socket.pseudo = pseudo;
+    	});
 
-    // Dès qu'on reçoit un "message" (clic sur le bouton), on le note dans la console
-    socket.on('message', function (message) {
-        // On récupère le pseudo de celui qui a cliqué dans les variables de session
-        console.log(socket.pseudo + ' me parle ! Il me dit : ' + message);
-    }); 
+    	// Dès qu'on reçoit un "message" (clic sur le bouton), on le note dans la console
+    	socket.on('message', function (message) {
+        	// On récupère le pseudo de celui qui a cliqué dans les variables de session
+        	console.log(socket.pseudo + ' me parle ! Il me dit : ' + message);
+    	});
+    } else {
+    	// il y a plus de 2 participants
+    	console.log("Pas plus de 2 connectés à la fois !!!");
+    }
 });
 
 
