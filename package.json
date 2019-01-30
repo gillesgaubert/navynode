@@ -1,0 +1,10 @@
+{
+    "name": "navynode",
+    "version": "0.1.0",
+    "dependencies": {
+        "socket.io": "~2.2.0",
+        "ent": "~0.1.0"
+    },
+    "author": "gilles",
+    "description": "projet bataille navale nodejs"
+}
