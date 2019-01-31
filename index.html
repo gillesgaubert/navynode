@@ -10,7 +10,36 @@
 
         <div id="communication"></div>
 
-        <p><input type="button" value="Embêter le serveur" id="poke" /></p>
+        <form method="post" action="/" id="attaqueForm">
+   			<fieldset>
+   				<legend>Votre attaque</legend>
+       			<p>
+       				<label for="x">abscisse :</label><br />
+       				<select name="x" id="x" autofocus required>
+  						<option value="0" selected>A</option>
+  						<option value="1">B</option>
+  						<option value="2">C</option>
+  						<option value="3">D</option>
+  						<option value="4">E</option>
+					</select>
+				</p>
+
+				<p>
+					<label for="y">ordonnée :</label><br />
+       				<select name="y" id="y" required>
+  						<option value="0" selected>0</option>
+  						<option value="1">1</option>
+  						<option value="2">2</option>
+  						<option value="3">3</option>
+  						<option value="4">4</option>
+					</select>
+				</p>
+				<br /><br /><br /><br />
+				<button type="submit" class="btn" id="submitAttaque">Feu !</button>
+   			</fieldset>
+		</form>
+
+        <!--<p><input type="button" value="Embêter le serveur" id="poke" /></p>-->
 
 
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
@@ -32,8 +61,18 @@
             
 
             // Lorsqu'on clique sur le bouton, on envoie un "message" au serveur
-            $('#poke').click(function () {
+            /*$('#poke').click(function () {
                 socket.emit('message', 'Salut serveur, ça va ?');
+            });*/
+            
+            // gestion de l envoi du form avec modification du comportement normal
+            $('#attaqueForm').submit(function (){
+                var x = $('#x').val();
+                var y = $('#y').val();
+                socket.emit('addAttaque', {abs:x,ord:y});
+                console.log('Abscisse = '+x+', ordonnee = '+y);
+                //$('#x').val('').focus();
+                return false;
             });
 
         </script>

@@ -30,12 +30,14 @@ io.sockets.on('connection', function (socket, pseudo) {
     	});
 
     	// Dès qu'on reçoit un "message" (clic sur le bouton), on le note dans la console
-    	socket.on('message', function (message) {
+    	socket.on('addAttaque', function (coords) {
         	// On récupère le pseudo de celui qui a cliqué dans les variables de session
-        	console.log(socket.pseudo + ' me parle ! Il me dit : ' + message);
+        	console.log(socket.pseudo+' joue : '+coords.abs+', '+coords.ord);
     	});
     } else {
     	// il y a plus de 2 participants
+    	socket.emit('messageConnection', '2 clients deja connectés au serveur...');
+
     	console.log("Pas plus de 2 connectés à la fois !!!");
     }
 });
