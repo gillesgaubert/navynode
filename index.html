@@ -6,7 +6,7 @@
     </head>
  
     <body>
-        <h1>Communication avec socket.io !</h1>
+        <h1>NavyNode : a feeble attempt !</h1>
 
         <div id="communication"></div>
 
@@ -39,7 +39,7 @@
    			</fieldset>
 		</form>
 
-        <!--<p><input type="button" value="Embêter le serveur" id="poke" /></p>-->
+        
 
 
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
@@ -47,7 +47,7 @@
         <script>
             var socket = io.connect('http://localhost:8080');
 
-            // On affiche une boîte de dialogue quand le serveur nous envoie un "message"
+            // On affiche un message du serveur dans le div id=communication
             socket.on('messageConnection', function(message) {
                 // alert('Le serveur a un message pour vous : ' + message);
                 $('#communication').append('<p>'+message+'</p>');
@@ -57,20 +57,20 @@
             var pseudo = prompt('Quel est votre pseudo ?');
             // Et on l'envoie avec le signal "petit_nouveau" (pour le différencier de "message")
             socket.emit('petit_nouveau', pseudo);
-
             
+            // On affiche le message qui previentquant le deuxieme joueur s est connecte
+            socket.on('messageBroadcast', function(message) {
+                console.log(message+" : debug messageBroadcast");
+                $('#communication').append('<p>'+message+'</p>');
+            });
 
-            // Lorsqu'on clique sur le bouton, on envoie un "message" au serveur
-            /*$('#poke').click(function () {
-                socket.emit('message', 'Salut serveur, ça va ?');
-            });*/
-            
             // gestion de l envoi du form avec modification du comportement normal
             $('#attaqueForm').submit(function (){
                 var x = $('#x').val();
                 var y = $('#y').val();
-                socket.emit('addAttaque', {abs:x,ord:y});
                 console.log('Abscisse = '+x+', ordonnee = '+y);
+                socket.emit('addAttaque', {abs:x,ord:y});
+                
                 //$('#x').val('').focus();
                 return false;
             });
