@@ -11,33 +11,29 @@
         <div id="communication"></div>
 
         <form method="post" action="/" id="attaqueForm">
-   			<fieldset>
-   				<legend>Votre attaque</legend>
-       			<p>
-       				<label for="x">abscisse :</label><br />
-       				<select name="x" id="x" autofocus required>
-  						<option value="0" selected>A</option>
-  						<option value="1">B</option>
-  						<option value="2">C</option>
-  						<option value="3">D</option>
-  						<option value="4">E</option>
-					</select>
-				</p>
+   			  <fieldset>
+            <legend>Votre attaque</legend>
+       		  <p>
+              Veuillez indiquer l'abscisse :<br />
+              <input type="radio" name="x" value="0" id="A" checked/> <label for="A">A</label><br />
+              <input type="radio" name="x" value="1" id="B" /> <label for="B">B</label><br />
+              <input type="radio" name="x" value="2" id="C" /> <label for="C">C</label><br />
+              <input type="radio" name="x" value="3" id="D" /> <label for="D">D</label>
+              <input type="radio" name="x" value="4" id="E" /> <label for="E">E</label>
+	          </p>
 
-				<p>
-					<label for="y">ordonnée :</label><br />
-       				<select name="y" id="y" required>
-  						<option value="0" selected>0</option>
-  						<option value="1">1</option>
-  						<option value="2">2</option>
-  						<option value="3">3</option>
-  						<option value="4">4</option>
-					</select>
-				</p>
-				<br /><br /><br /><br />
-				<button type="submit" class="btn" id="submitAttaque">Feu !</button>
-   			</fieldset>
-		</form>
+  			    <p>
+              Veuillez indiquer l'ordonnée :<br />
+              <input type="radio" name="y" value="0" id="0" checked/> <label for="0">0</label><br />
+              <input type="radio" name="y" value="1" id="1" /> <label for="1">1</label><br />
+              <input type="radio" name="y" value="2" id="2" /> <label for="2">2</label><br />
+              <input type="radio" name="y" value="3" id="3" /> <label for="3">3</label>
+              <input type="radio" name="y" value="4" id="4" /> <label for="4">4</label>
+      	    </p>
+            <br /><br /><br /><br />
+	   		    <button type="submit" class="btn" id="submitAttaque">Feu !</button>
+   	  	  </fieldset>
+		    </form>
 
         
 
@@ -66,8 +62,8 @@
 
             // gestion de l envoi du form avec modification du comportement normal
             $('#attaqueForm').submit(function (){
-                var x = $('#x').val();
-                var y = $('#y').val();
+                var x = $("input[name='x']:checked").val();
+                var y = $("input[name='y']:checked").val();
                 console.log('Abscisse = '+x+', ordonnee = '+y);
                 socket.emit('addAttaque', {abs:x,ord:y});
                 
