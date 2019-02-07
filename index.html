@@ -18,7 +18,7 @@
               <input type="radio" name="x" value="0" id="A" checked/> <label for="A">A</label><br />
               <input type="radio" name="x" value="1" id="B" /> <label for="B">B</label><br />
               <input type="radio" name="x" value="2" id="C" /> <label for="C">C</label><br />
-              <input type="radio" name="x" value="3" id="D" /> <label for="D">D</label>
+              <input type="radio" name="x" value="3" id="D" /> <label for="D">D</label><br />
               <input type="radio" name="x" value="4" id="E" /> <label for="E">E</label>
 	          </p>
 
@@ -27,7 +27,7 @@
               <input type="radio" name="y" value="0" id="0" checked/> <label for="0">0</label><br />
               <input type="radio" name="y" value="1" id="1" /> <label for="1">1</label><br />
               <input type="radio" name="y" value="2" id="2" /> <label for="2">2</label><br />
-              <input type="radio" name="y" value="3" id="3" /> <label for="3">3</label>
+              <input type="radio" name="y" value="3" id="3" /> <label for="3">3</label><br />
               <input type="radio" name="y" value="4" id="4" /> <label for="4">4</label>
       	    </p>
             <br /><br /><br /><br />
@@ -45,7 +45,7 @@
 
             // On affiche un message du serveur dans le div id=communication
             socket.on('messageConnection', function(message) {
-                // alert('Le serveur a un message pour vous : ' + message);
+                $('#communication').empty();
                 $('#communication').append('<p>'+message+'</p>');
             });
 
@@ -57,6 +57,7 @@
             // On affiche le message qui previentquant le deuxieme joueur s est connecte
             socket.on('messageBroadcast', function(message) {
                 console.log(message+" : debug messageBroadcast");
+                $('#communication').empty();
                 $('#communication').append('<p>'+message+'</p>');
             });
 
@@ -66,8 +67,6 @@
                 var y = $("input[name='y']:checked").val();
                 console.log('Abscisse = '+x+', ordonnee = '+y);
                 socket.emit('addAttaque', {abs:x,ord:y});
-                
-                //$('#x').val('').focus();
                 return false;
             });
 
